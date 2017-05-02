@@ -8,8 +8,8 @@ defmodule PhoenixAlexa.Mixfile do
      version: @version,
      elixir: "~> 1.2",
      description: "Alexa library for Phoenix",
-     deps: deps,
-     package: package,
+     deps: deps(),
+     package: package(),
      consolidate_protocols: Mix.env != :test]
   end
 
