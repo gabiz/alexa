@@ -104,7 +104,7 @@ defmodule PhoenixAlexa.Response do
     put_audio_directive(response,"REPLACE_ALL",url,token,offset)
 
   end
-  def put_enqueue_audio_directive(response,behavior,url,token,offset) do
+  def put_enqueue_audio_directive(response,url,token,offset) do
     put_audio_directive(response,"ENQUEUE",url,token,offset)
   end
 
