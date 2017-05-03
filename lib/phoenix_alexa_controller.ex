@@ -18,9 +18,11 @@ defmodule PhoenixAlexa.Controller do
             launch_request(conn, request)
           "IntentRequest" ->
             intent_request(conn, request.request.intent.name, request)
-          "SessionEndedRequest" -> 
+          "SessionEndedRequest" ->
             session_ended_request(conn, request)
               |> set_response(%{})
+          _ ->
+            catchall_request(conn,request.request.type,request)
         end
           |> Plug.Conn.send_resp()
       end
@@ -28,7 +30,7 @@ defmodule PhoenixAlexa.Controller do
       def unquote(method)(conn, params) do
         case Poison.Decode.decode(params, as: %PhoenixAlexa.Request{}) do
           %PhoenixAlexa.Request{} = request -> handle_request(conn, request)
-          _ -> 
+          _ ->
             conn
               |> Plug.Conn.put_resp_content_type("application/json")
               |> Plug.Conn.send_resp(500, Poison.encode!(%{error: "Internal Error"}))
@@ -48,7 +50,12 @@ defmodule PhoenixAlexa.Controller do
         conn |> set_response(%Response{})
       end
 
-      defoverridable [launch_request: 2, intent_request: 3, session_ended_request: 2]
+      def catchall_request(conn, _, request) do
+        conn |> set_response(%Response{})
+      end
+
+
+      defoverridable [launch_request: 2, intent_request: 3, session_ended_request: 2, catchall_request: 3]
 
     end
   end
