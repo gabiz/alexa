@@ -86,10 +86,10 @@ defmodule PhoenixAlexa.Response do
      }
      put_directive(response,[directive])
   end
-  defp put_audio_directive(response,behavior,url,token,offset) do
+  def put_replace_audio_directive(response,url,token,offset) do
     directive = %{
       :type => "AudioPlayer.Play",
-      :playBehavior => behavior,
+      :playBehavior => "REPLACE_ALL",
       :audioItem => %{
         :stream => %{
             :url => url,
@@ -100,12 +100,20 @@ defmodule PhoenixAlexa.Response do
      }
      put_directive(response,[directive])
   end
-  def put_replace_audio_directive(response,url,token,offset) do
-    put_audio_directive(response,"REPLACE_ALL",url,token,offset)
-
-  end
-  def put_enqueue_audio_directive(response,url,token,offset) do
-    put_audio_directive(response,"ENQUEUE",url,token,offset)
+  def put_enqueue_audio_directive(response,url,token,previous_token,offset) do
+    directive = %{
+      :type => "AudioPlayer.Play",
+      :playBehavior => "ENQUEUE",
+      :audioItem => %{
+        :stream => %{
+            :url => url,
+            :token => token,
+            :offsetInMilliseconds => offset,
+            :expectedPreviousToken => previous_token
+        }
+      }
+     }
+     put_directive(response,[directive])
   end
 
   # put directives
