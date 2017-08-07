@@ -35,7 +35,6 @@ defmodule PhoenixAlexa.Controller do
               |> Plug.Conn.put_resp_content_type("application/json")
               |> Plug.Conn.send_resp(500, Poison.encode!(%{error: "Internal Error"}))
         end
-
       end
 
       def launch_request(conn, _request) do

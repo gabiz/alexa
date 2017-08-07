@@ -1,0 +1,27 @@
+{
+  "type": "BodyTemplate2",
+  "token": "<%= token %>",
+  "backButton": "VISIBLE",
+  "backgroundImage": {
+    "contentDescription": "<%= background.description %>",
+    "sources": [
+      {
+        "url": "<%= background.url %>"
+      }
+    ]
+  },
+  "image": {
+    "contentDescription": "<% image.description %>",
+    "sources": [
+      {
+        "url": "<%= image.url %>"
+      }
+    ]
+  },
+  "title": "<%= title %>",
+  "textContent": {
+    "primaryText": {
+      "text": "<%= primary_text %>"
+    }
+  }
+}

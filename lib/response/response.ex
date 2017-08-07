@@ -1,7 +1,6 @@
 defmodule PhoenixAlexa.Response do
   alias PhoenixAlexa.{Response, TextOutputSpeech, SsmlOutputSpeech}
   alias PhoenixAlexa.{SimpleCard, StandardCard, LinkAccountCard}
-
   defstruct version: "1.0",
             sessionAttributes: %{},
             response: %{
@@ -84,7 +83,7 @@ defmodule PhoenixAlexa.Response do
     directive = %{
       :type => "AudioPlayer.Stop"
      }
-     put_directive(response,[directive])
+     put_directive(response,directive)
   end
   def put_replace_audio_directive(response,url,token,offset) do
     directive = %{
@@ -98,7 +97,7 @@ defmodule PhoenixAlexa.Response do
         }
       }
      }
-     put_directive(response,[directive])
+     put_directive(response,directive)
   end
   def put_enqueue_audio_directive(response,url,token,previous_token,offset) do
     directive = %{
@@ -113,12 +112,37 @@ defmodule PhoenixAlexa.Response do
         }
       }
      }
-     put_directive(response,[directive])
+     put_directive(response,directive)
   end
 
-  # put directives
-  def put_directive(response,directives) do
-    %Response{response | response: (response.response |> Map.put(:directives, directives))}
+  def put_directive(response,directive) do
+    case response.response do
+      %{:directives => to_append} ->
+        %Response{response | response: (response.response
+        |> Map.put(:directives, [directive] ++ to_append))}
+      _ ->
+        %Response{response | response: (response.response
+          |> Map.put(:directives, [directive] ))}
+    end
+  end
+
+
+  def put_video_app_launch_directive(response,url,title,subtitle) do
+    directive = %{
+      :type => "VideoApp.Launch",
+      :videoItem => %{
+        :source => url,
+        :metadata => %{
+            :title => title,
+            :subtitle => subtitle
+        }
+      }
+     }
+     put_directive(response,directive)
+  end
+
+  def remove_should_end_session(response) do
+    response |> Map.put( :response , %{})
   end
 
 
