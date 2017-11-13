@@ -1,3 +1,5 @@
 defmodule PhoenixAlexa.Context do
-  defstruct System: %{}
+  alias PhoenixAlexa.System
+
+  defstruct System: %System{}
 end

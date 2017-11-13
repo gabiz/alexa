@@ -25,17 +25,25 @@ defmodule PhoenixAlexa.RequestTest do
   "context": {
     "System": {
       "user": {
-        "userId": "abcd"
+        "userId": "abcd",
+        "permissions": {
+          "consentToken": "12345"
+        }
+      },
+      "device": {
+        "deviceId": "xyz"
       }
     }
   },
   "version": "1.0"
 }
     """
-    overall_request = Poison.decode!(json, as: %Request{}) |> Apex.ap
+    overall_request = Poison.decode!(json, as: %Request{})
     assert overall_request.request.type == "LaunchRequest"
     assert overall_request.session.sessionId == "SessionId.80ef8951-172e-4f02-ace8-a7ec847e2d9f"
-    assert Map.get(overall_request.context, :System)["user"]["userId"] == "abcd"
+    assert Map.get(overall_request.context, :System).user.userId == "abcd"
+    assert Map.get(overall_request.context, :System).user.permissions.consentToken == "12345"
+    assert Map.get(overall_request.context, :System).device.deviceId == "xyz"
   end
 
   test "session" do

@@ -1,5 +1,7 @@
 defmodule PhoenixAlexa.User do
-  
+  alias PhoenixAlexa.UserPermissions
+
   defstruct userId: "",
-            accessToken: ""
+            accessToken: "",
+            permissions: %UserPermissions{}
 end
