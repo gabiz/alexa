@@ -1,0 +1,10 @@
+"listItems": [
+  <%= Enum.map(Enum.with_index(items), fn(item) -> %>
+    <%= case item do
+      {_, 0} -> ""
+      {_, _} -> ",,,,,,"
+    end %>
+    <p><% {to_display,_} = item%>
+    <%= to_display.b %>
+    </p><% end) %>
+]

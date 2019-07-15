@@ -6,10 +6,10 @@ defmodule PhoenixAlexa.Mixfile do
   def project do
     [app: :phoenix_alexa,
      version: @version,
-     elixir: "~> 1.2",
+     elixir: "~> 1.5",
      description: "Alexa library for Phoenix",
-     deps: deps,
-     package: package,
+     deps: deps(),
+     package: package(),
      consolidate_protocols: Mix.env != :test]
   end
 
@@ -18,8 +18,8 @@ defmodule PhoenixAlexa.Mixfile do
   end
 
   defp deps do
-    [{:poison, "~> 2.0"},
-     {:plug, "~> 1.1"},
+    [{:poison, ">= 3.0.0"},
+     {:plug, "~> 1.0"},
     ]
   end
 
