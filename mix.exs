@@ -19,7 +19,7 @@ defmodule PhoenixAlexa.Mixfile do
 
   defp deps do
     [{:poison, ">= 3.0.0"},
-     {:plug, "~> 1.3.5"},
+     {:plug, "~> 1.0"},
     ]
   end
 
